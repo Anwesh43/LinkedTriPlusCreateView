@@ -30,3 +30,37 @@ fun Float.mirrorValue(a : Int, b : Int) : Float {
     return (1 - k) / a + k / b
 }
 fun Float.updateValue(dir : Float, a : Int, b : Int) : Float = mirrorValue(a, b) * dir * scGap
+
+fun Canvas.drawPlus(i : Int, sc1 : Float, sc2 : Float, size : Float, paint : Paint) {
+    val xGap : Float = size / lines
+    val sc1i : Float = sc1.divideScale(i, lines)
+    val sc2i : Float = sc2.divideScale(i, lines)
+    val sizeUp : Float = xGap * sc1i
+    save()
+    translate(0f, -size + xGap * (2 * i + 1))
+    for (j in 0..1){
+        save()
+        rotate(90f * j * sc2i)
+        drawLine(-sizeUp, 0f, sizeUp, 0f, paint)
+        restore()
+    }
+    restore()
+}
+
+fun Canvas.drawTPCNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = h / (nodes + 1)
+    val size : Float = gap / sizeFactor
+    val sc1 : Float = scale.divideScale(0, 2)
+    val sc2 : Float = scale.divideScale(1, 2)
+    paint.color = foreColor
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
+    paint.strokeCap = Paint.Cap.ROUND
+    save()
+    translate(w / 2, gap * (i + 1))
+    for (j in 0..(lines - 1)) {
+        drawPlus(j, sc1, sc2, size, paint)
+    }
+    restore()
+}
