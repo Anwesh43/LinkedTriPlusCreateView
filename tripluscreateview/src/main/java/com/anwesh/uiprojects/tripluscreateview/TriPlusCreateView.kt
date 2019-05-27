@@ -195,4 +195,26 @@ class TriPlusCreateView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : TriPlusCreateView) {
+
+        private val animator : Animator = Animator(view)
+        private val tpc : TriPlusCreate = TriPlusCreate(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            tpc.draw(canvas, paint)
+            animator.animate {
+                tpc.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            tpc.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
