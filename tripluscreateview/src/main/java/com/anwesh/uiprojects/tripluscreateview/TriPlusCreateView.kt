@@ -20,6 +20,7 @@ val strokeFactor : Int = 90
 val sizeFactor : Float = 2.9f
 val foreColor : Int = Color.parseColor("#283593")
 val backColor : Int = Color.parseColor("#BDBDBD")
+val delay : Long = 20
 
 fun Int.inverse() : Float = 1f / this
 fun Float.scaleFactor() : Float = Math.floor(this / scDiv).toFloat()
@@ -109,7 +110,7 @@ class TriPlusCreateView(ctx : Context) : View(ctx) {
             if (animated) {
                 cb()
                 try {
-                    Thread.sleep(50)
+                    Thread.sleep(delay)
                     view.invalidate()
                 } catch(ex : Exception) {
 
@@ -225,7 +226,7 @@ class TriPlusCreateView(ctx : Context) : View(ctx) {
         fun create(activity : Activity) : TriPlusCreateView {
             val view : TriPlusCreateView = TriPlusCreateView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
