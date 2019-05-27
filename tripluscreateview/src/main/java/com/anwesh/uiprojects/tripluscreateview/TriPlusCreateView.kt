@@ -218,4 +218,14 @@ class TriPlusCreateView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+
+    companion object {
+
+        fun create(activity : Activity) : TriPlusCreateView {
+            val view : TriPlusCreateView = TriPlusCreateView(activity)
+            activity.setContentView(view)
+            return view 
+        }
+    }
 }
